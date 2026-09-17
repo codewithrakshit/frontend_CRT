@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blinkit – Grocery in 10 minutes</title>
+  <link rel="stylesheet" href="blinkit.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- ══════════════ HEADER ══════════════ -->
+  <header class="header">
+    <div class="header-inner">
+
+      <!-- Logo -->
+      <a href="#" class="logo">
+        <span class="logo-blink">blink</span><span class="logo-it">it</span>
+        <span class="logo-tagline">Grocery in 10 minutes</span>
+      </a>
+
+      <!-- Location -->
+      <div class="location-bar">
+        <i class="fa-solid fa-location-dot"></i>
+        <div class="location-text">
+          <span class="deliver-to">Deliver to</span>
+          <span class="location-name" id="locationName">Select location</span>
+        </div>
+        <i class="fa-solid fa-chevron-down loc-arrow"></i>
+      </div>
+
+      <!-- Search -->
+      <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="searchInput" placeholder='Search "milk, bread, eggs…"' autocomplete="off" />
+        <button class="search-clear" id="searchClear"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Header actions -->
+      <div class="header-actions">
+        <button class="btn-login" id="loginBtn">
+          <i class="fa-regular fa-user"></i> Login
+        </button>
+        <button class="cart-btn" id="cartBtn">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span class="cart-count" id="cartCount">0</span>
+          <span class="cart-label">My Cart</span>
+          <span class="cart-total" id="cartTotal">₹0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══════════════ HERO BANNER ══════════════ -->
+  <section class="hero">
+    <div class="hero-slider" id="heroSlider">
+      <div class="hero-slide active" style="background: linear-gradient(135deg,#f8e231 0%,#ffcb00 100%)">
+        <div class="hero-content">
+          <p class="hero-sub">Fastest delivery in India</p>
+          <h1>Groceries delivered<br>in <span>10 minutes</span></h1>
+          <button class="btn-hero" onclick="scrollToProducts()">Order Now</button>
+        </div>
+        <img src="https://cdn-icons-png.flaticon.com/512/2553/2553651.png" class="hero-img" alt="grocery" />
+      </div>
+      <div class="hero-slide" style="background: linear-gradient(135deg,#d4f5c4 0%,#a8e063 100%)">
+        <div class="hero-content">
+          <p class="hero-sub">Fresh & Organic</p>
+          <h1>Farm-fresh<br><span>Fruits & Veggies</span></h1>
+          <button class="btn-hero" onclick="filterCategory('Fruits & Vegetables')">Shop Now</button>
+        </div>
+        <img src="https://cdn-icons-png.flaticon.com/512/415/415733.png" class="hero-img" alt="fruits" />
+      </div>
+      <div class="hero-slide" style="background: linear-gradient(135deg,#ffd6e0 0%,#ffb3c6 100%)">
+        <div class="hero-content">
+          <p class="hero-sub">Daily Essentials</p>
+          <h1>Dairy, Eggs &<br><span>Bakery</span> — always fresh</h1>
+          <button class="btn-hero" onclick="filterCategory('Dairy & Bakery')">Explore</button>
+        </div>
+        <img src="https://cdn-icons-png.flaticon.com/512/3724/3724788.png" class="hero-img" alt="dairy" />
+      </div>
+    </div>
+    <div class="hero-dots" id="heroDots">
+      <span class="dot active" onclick="goToSlide(0)"></span>
+      <span class="dot" onclick="goToSlide(1)"></span>
+      <span class="dot" onclick="goToSlide(2)"></span>
+    </div>
+  </section>
+
+  <!-- ══════════════ DELIVERY BADGE ══════════════ -->
+  <div class="delivery-strip">
+    <div class="strip-item"><i class="fa-solid fa-bolt"></i> 10-Minute Delivery</div>
+    <div class="strip-item"><i class="fa-solid fa-tags"></i> Best Prices Guaranteed</div>
+    <div class="strip-item"><i class="fa-solid fa-shield-halved"></i> 100% Safe & Hygienic</div>
+    <div class="strip-item"><i class="fa-solid fa-rotate-left"></i> Easy Returns</div>
+  </div>
+
+  <!-- ══════════════ CATEGORIES ══════════════ -->
+  <section class="section categories-section" id="categories">
+    <div class="section-header">
+      <h2>Shop by Category</h2>
+    </div>
+    <div class="categories-grid" id="categoriesGrid">
+      <!-- Populated by JS -->
+    </div>
+  </section>
+
+  <!-- ══════════════ DEALS BANNER ══════════════ -->
+  <div class="deals-banner">
+    <div class="deal-card deal-yellow">
+      <div>
+        <p class="deal-tag">Limited Offer</p>
+        <h3>Up to 40% OFF</h3>
+        <p>on fresh vegetables</p>
+      </div>
+      <img src="https://cdn-icons-png.flaticon.com/512/2153/2153786.png" alt="deal" />
+    </div>
+    <div class="deal-card deal-green">
+      <div>
+        <p class="deal-tag">New Launch</p>
+        <h3>Free Delivery</h3>
+        <p>on orders above ₹199</p>
+      </div>
+      <img src="https://cdn-icons-png.flaticon.com/512/4108/4108737.png" alt="deal" />
+    </div>
+    <div class="deal-card deal-blue">
+      <div>
+        <p class="deal-tag">Weekend Special</p>
+        <h3>Buy 2 Get 1</h3>
+        <p>on all dairy products</p>
+      </div>
+      <img src="https://cdn-icons-png.flaticon.com/512/3724/3724788.png" alt="deal" />
+    </div>
+  </div>
+
+  <!-- ══════════════ PRODUCTS ══════════════ -->
+  <section class="section products-section" id="products">
+    <div class="section-header">
+      <h2 id="productsHeading">All Products</h2>
+      <button class="btn-all" id="clearFilter" onclick="clearCategoryFilter()" style="display:none">
+        <i class="fa-solid fa-xmark"></i> Clear Filter
+      </button>
+    </div>
+
+    <!-- Category filter pills -->
+    <div class="filter-pills" id="filterPills">
+      <!-- Populated by JS -->
+    </div>
+
+    <!-- Sort & count bar -->
+    <div class="products-bar">
+      <span id="productCount">0 products</span>
+      <div class="sort-wrap">
+        <label for="sortSelect">Sort by:</label>
+        <select id="sortSelect">
+          <option value="default">Relevance</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="discount">Discount</option>
+          <option value="name">Name A–Z</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="products-grid" id="productsGrid">
+      <!-- Populated by JS -->
+    </div>
+
+    <div class="no-results" id="noResults" style="display:none">
+      <i class="fa-solid fa-face-sad-tear"></i>
+      <p>No products found</p>
+      <button onclick="clearSearch()">Clear Search</button>
+    </div>
+  </section>
+
+  <!-- ══════════════ CART SIDEBAR ══════════════ -->
+  <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+  <aside class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <div>
+        <h3>My Cart</h3>
+        <span id="cartItemCount">0 items</span>
+      </div>
+      <button class="cart-close" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="cart-delivery-info">
+      <i class="fa-solid fa-bolt"></i>
+      <div>
+        <strong>Delivery in 10 minutes</strong>
+        <p>Shipment of <span id="cartItemCount2">0</span> item(s)</p>
+      </div>
+    </div>
+
+    <div class="cart-items" id="cartItems">
+      <!-- Populated by JS -->
+    </div>
+
+    <div class="cart-empty" id="cartEmpty">
+      <img src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png" alt="empty cart" />
+      <p>Your cart is empty</p>
+      <span>Add items to get started</span>
+    </div>
+
+    <div class="cart-footer" id="cartFooter" style="display:none">
+      <div class="bill-details">
+        <h4>Bill Details</h4>
+        <div class="bill-row"><span>Item Total</span><span id="billItemTotal">₹0</span></div>
+        <div class="bill-row"><span>Delivery Fee</span><span class="free" id="deliveryFee">FREE</span></div>
+        <div class="bill-row"><span>Platform Fee</span><span>₹5</span></div>
+        <div class="bill-row total"><span>Grand Total</span><span id="billGrandTotal">₹5</span></div>
+      </div>
+      <button class="btn-checkout" onclick="checkout()">
+        <span id="checkoutTotal">₹5</span>
+        Proceed to Checkout <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ══════════════ TOAST ══════════════ -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ══════════════ LOGIN MODAL ══════════════ -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeLogin()"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-logo"><span class="logo-blink">blink</span><span class="logo-it">it</span></div>
+      <h3>Login / Sign Up</h3>
+      <p class="modal-sub">Enter your phone number to continue</p>
+      <div class="phone-input">
+        <span>+91</span>
+        <input type="tel" id="phoneInput" placeholder="10-digit mobile number" maxlength="10" />
+      </div>
+      <button class="btn-otp" onclick="sendOTP()">Send OTP</button>
+      <p class="modal-terms">By continuing, you agree to our <a href="#">Terms</a> & <a href="#">Privacy Policy</a></p>
+    </div>
+  </div>
+
+  <!-- ══════════════ FOOTER ══════════════ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <div class="footer-logo"><span class="logo-blink">blink</span><span class="logo-it">it</span></div>
+        <p>Grocery delivery in 10 minutes. Available across major cities in India.</p>
+        <div class="social-links">
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Returns</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Refund Policy</a></li>
+        </ul>
+        <h4 style="margin-top:1rem">Download App</h4>
+        <div class="app-badges">
+          <a href="#" class="badge"><i class="fa-brands fa-apple"></i> App Store</a>
+          <a href="#" class="badge"><i class="fa-brands fa-google-play"></i> Play Store</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Blinkit Clone. Built for learning purposes only. Not affiliated with Blinkit / Zomato.</p>
+    </div>
+  </footer>
+
+  <script src="blinkit.js"></script>
+</body>
+</html>
